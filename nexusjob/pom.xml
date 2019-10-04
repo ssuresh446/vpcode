@@ -118,20 +118,14 @@
     		<version>1.3</version>
     		<scope>test</scope>
 		</dependency>
+
 <distributionManagement>
-    <repository>
-      <id>releases</id>
-      <!-- CHANGE HERE by your team nexus server -->
-      <url>http://localhost:8081/nexus/content/repositories/thirdparty/</url>
-    </repository>
-    <snapshotRepository>
-      <id>snapshots</id>
-      <!-- CHANGE HERE by your team nexus server -->
-      <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-	    
-	    
+   <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://localhost:8081/repository/nexusrepo/</url>
+   </snapshotRepository>
+</distributionManagement>
+
 	    
 	    
 	    
@@ -171,6 +165,41 @@
 		            </execution>
 		        </executions>
 		</plugin>
+		
+		<plugin>
+  			 <artifactId>maven-deploy-plugin</artifactId>
+   				<version>2.8.1</version>
+   				    <executions>
+    					<execution>
+         					<id>default-deploy</id>
+         					<phase>deploy</phase>
+         					<goals>
+           						<goal>deploy</goal>
+         					</goals>
+      					</execution>
+  				    </executions>
+		</plugin>
+
+		<plugin>
+   			<groupId>org.sonatype.plugins</groupId>
+   			<artifactId>nexus-staging-maven-plugin</artifactId>
+   			<version>1.5.1</version>
+   			<executions>
+      				<execution>
+         				<id>default-deploy</id>
+        				<phase>deploy</phase>
+         				<goals>
+            					<goal>deploy</goal>
+         				</goals>
+      				</execution>
+   			</executions>
+   			<configuration>
+      			<serverId>nexus</serverId>
+      			<nexusUrl>http://localhost:8081/nexus/</nexusUrl>
+      			<skipStaging>true</skipStaging>
+   			</configuration>
+		</plugin>
+
         </plugins>
     </build>
 </project>
